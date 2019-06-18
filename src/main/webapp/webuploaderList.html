@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!--1,引入外部样式-->
+    <link href="css/bootstrap.css" type="text/css" rel="stylesheet" />
+    <!--2,引入jquery-->
+    <script src="js/jquery-1.11.0.js"></script>
+
+    <script type="text/javascript">
+
+        $(function () {
+            $.ajax({
+                url:"/doFindAll",
+                type:'get',
+                dataType:'json',
+                success:function(res){
+                    var jsonArray  = res.items;
+                    //i是下标,v是json对象
+                    $.each(jsonArray,function(i,v){
+                        console.log(i+"---"+v);
+                        var name = v.name;
+                        var price = v.price;
+                        var images = v.images;//aaa,bb,cc
+                        var image = images.split(",");
+
+                        console.log(image[0]);
+                        var html = "<div class=\"row\" style=\"width:500px\">\n" +
+                            "    <div class=\"media\">\n" +
+                            "        <a href=\"#\" class=\"media-left media-middle media-bottom\">\n" +
+                            // "<img src=\"http://192.168.111.166/group1/M00/00/00/wKhvpl0INtmAXzpmAARIu6Ubcw0730.jpg\" width=\"100\"/>\n" +
+                            "<img src="+image[0]+" width=\"100\"/>\n" +
+                            "        </a>\n" +
+                            "        <div class=\"media-body\">\n" +
+                            "            <h4 class=\"media-heading\">"+name+"</h4>\n" +
+                            "            <p>"+price+
+                            "            </p>\n" +
+                            "        </div>\n" +
+                            "    </div>\n" +
+                            "</div>";
+                        var $html = $(html);
+
+                        $("#containner").append($html);
+                        // $("#containner").append("<br>");
+                    });
+                }
+            });
+        });
+
+    </script>
+
+</head>
+<body>
+
+<div id="containner"></div>
+
+</body>
+</html>
